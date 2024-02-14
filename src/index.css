@@ -1,0 +1,169 @@
+html,
+body {
+    background-color: #06101b;
+    margin: 0;
+    padding: 0;
+    /* height: 100%; */
+    /* height: auto; */
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /* overscroll-behavior-y: none;
+    text-rendering: optimizeLegibility; */
+    /* overflow-x: hidden; */
+    /* overflow: hidden; */
+    /* background-color: transparent !important; */
+}
+
+/* .dark {
+    background-color: #121a27;
+} */
+
+/* body > #root {
+	height: 100vh;
+} */
+
+@media print {
+    @page {
+        size: landscape;
+        margin: 20mm;
+    }
+
+    #bracket-container,
+    #bracket-container * {
+        visibility: visible;
+    }
+
+    #bracket-container {
+        height: initial !important;
+        overflow: initial !important;
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: scale(0.6);
+    }
+    /* .bracket-surface {
+        transform-origin: 0 0;
+        transform: scale(0.1);
+    } */
+
+    #root {
+        overflow: auto;
+        height: auto;
+    }
+
+    #auth {
+        width: auto;
+        height: auto;
+    }
+
+    html,
+    body {
+        height: initial !important;
+        overflow: initial !important;
+        /* -webkit-print-color-adjust: exact; */
+    }
+
+    /* body,
+    html {
+        height: initial !important;
+        overflow: initial !important;
+        -webkit-print-color-adjust: exact;
+    } */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: UniformCondensed, sans-serif !important;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif; */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+    /* min-height: 100%; */
+
+    background-color: #0B1421;
+    color: white;
+    /* font-size: 15px !important; */
+    /* overflow-x: hidden; */
+    /* overflow: hidden; */
+    /* height: 100vh; */
+    /* background-image: url('assets/img/blue-bg2.png');
+	background-size: cover;
+	background-position: center top; */
+    /* background-color: #f9fafc; */
+    /* background-color: transparent; */
+    /* background: linear-gradient(rgb(13, 30, 53), rgb(40, 55, 76)); */
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#root {
+    /* display: flex; */
+    /* -webkit-overflow-scrolling: touch; */
+    /* height: 100vh; */
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.ant-app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#auth {
+    width: 100%;
+    height: 100%;
+}
+
+pre {
+    padding: 5px;
+    margin: 5px;
+    font-size: 0.9em;
+}
+
+.string {
+    color: green;
+}
+.number {
+    color: darkorange;
+}
+.boolean {
+    color: blue;
+}
+.null {
+    color: magenta;
+}
+.key {
+    color: red;
+}
+
+.truncate {
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+.logo img {
+    display: block;
+    margin: auto;
+}
+.vertical{
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+}

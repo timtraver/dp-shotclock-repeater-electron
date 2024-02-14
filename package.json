@@ -1,0 +1,106 @@
+{
+  "name": "dp-shotclock-repeater-electron",
+  "description": "DP Shot Clock Repeater",
+  "author": "Tim Traver",
+  "productName": "DigitalPool Shot Clock Repeater",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./public/electron.js",
+  "homepage": "./",
+  "dependencies": {
+    "antd": "^5.13.2",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "electron-is-dev": "^3.0.1",
+    "express": "^4.18.2",
+    "formik": "^2.4.5",
+    "formik-antd": "3.0.0-beta.8",
+    "node-fetch": "^2.6.1",
+    "os": "^0.1.2",
+    "qs": "^6.11.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "socket.io": "^4.7.4",
+    "socket.io-client": "^4.7.4",
+    "zlib": "^1.0.5"
+  },
+  "scripts": {
+    "start": "PORT=3001 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+    "electron": "wait-on tcp:127.0.0.1:3001 && electron .",
+    "package": "react-scripts build && electron-forge package",
+    "make": "react-scripts build && electron-forge make",
+    "dist": "build",
+    "postinstall": "install-app-deps",
+    "pack": "build --dir"
+  },
+  "browserslist": {
+    "production": [
+      "last 1 electron version",
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 electron version",
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.4",
+    "electron-builder": "^24.9.1",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.digitalpool.shotclock.repeater.electron",
+    "icon": "src/icons/mac/icon.icns",
+    "files": [
+      "./dist/**/*",
+      "./public/electron.js",
+      "./src/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.sports",
+      "icon": "src/icons/mac/icon.icns",
+      "target": "dmg"
+    },
+    "dmg": {
+      "background": "src/assets/images/digitalpool_installer_background.png",
+      "sign": false,
+      "window": {
+        "width": 540,
+        "height": 400
+      },
+      "contents": [
+        {
+          "x": 120,
+          "y": 275
+        },
+        {
+          "x": 420,
+          "y": 275,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "src/icons/win/icon.ico"
+    }
+  }
+}
