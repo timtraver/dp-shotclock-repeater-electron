@@ -8,15 +8,19 @@
 
 This is a project providing an electron application that can be compiled for Mac and Windows desktops to run a websocket repeater that ShotClock functions can connect to for sharing particular matches shot clocks between overlays.
 
-It has an admin screen that shows console messages from the app, and the configuration react front end allows you to start the application on a locla IP address and port, and copy a publicly available URL to your DigitalPool tournament settings
+It has an admin screen that shows console messages from the app, and the configuration react front end allows you to start the application on a local IP address and port, and copy a publicly available URL to your DigitalPool tournament settings
+
+## Requirements
+This environment is run on top of a node back end, so whatever system you are on needs to have the latest node version running.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
+### `npm run install` 
 ### `npm run dev` 
 
-This runs the application in developement mode locally and brings up the admin window for you to start the application on a particular port.
+This installs all of the node dependencies and runs the application in developement mode locally and brings up the admin window for you to start the application on a particular port.
 
 ### To build the electron distribution
 
