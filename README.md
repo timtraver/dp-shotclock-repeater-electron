@@ -1,10 +1,8 @@
-# App.js
+# DigitalPool Shot Clock Repeater Electron App
 # @author Tim Traver <timtraver@gmail.com>
 # @version 1.0
-# @see {@link https://github.com/timtraver/dp-shotclock-repeater-node-electron}
-# @description : This code is to provide a central location for a Shot Clock coordinator
-between an 'Admin' screen that is controlling the shot clock, and any overlays or
-screens that are following a particular match.
+# @see {@link https://github.com/timtraver/dp-shotclock-repeater-electron}
+# @description : This code is to provide a central location for a Shot Clock coordinator between an 'Admin' screen that is controlling the shot clock, and any overlays or screens that are following a particular match.
  
 # Getting Started with DigitalPool ShotClock Repeater Electron
 
