@@ -25,7 +25,9 @@ This installs all of the node dependencies and runs the application in developem
 ### To build the electron distribution
 
 Run `npm run build`
+
 Then `npx electron-builder build --mac` for the mac dmg installer
+
 Then `npx electron-builder build --win` for the win exe installer
 
 Those files will reside in the dist directory
