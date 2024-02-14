@@ -63,8 +63,8 @@
     "appId": "com.digitalpool.shotclock.repeater.electron",
     "icon": "src/icons/mac/icon.icns",
     "files": [
-      "./dist/**/*",
       "./public/electron.js",
+      "./public/*",
       "./src/**/*"
     ],
     "mac": {
