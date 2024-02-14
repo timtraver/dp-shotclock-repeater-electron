@@ -36,7 +36,7 @@ function createWindow() {
   const win = new BrowserWindow({
     title: 'DigitalPool Shot Clock Repeater',
     width: 800,
-    height: 600,
+    height: 620,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
