@@ -26,11 +26,23 @@ This installs all of the node dependencies and runs the application in developem
 
 Run `npm run build`
 
-Then `npx electron-builder build --mac` for the mac dmg installer
+It is important that you you store in the .env file (and export them so they are in the environment) the apple ID and app specific password in order to properly notarize the application.
 
-Then `npx electron-builder build --win` for the win exe installer
+Here is an example of what the .env file would look like
+APPLE_ID="Your Apple ID"
+APPLE_ID_PASSWORD="The apple app specific password"
+APPLE_APP_SPECIFIC_PASSWORD="The apple app specific password"
+TEAM_ID="Your Team ID"
 
-Those files will reside in the dist directory
+Now, to build and sign and notarize, use the following :
+
+`npx electron-builder build --mac` for the mac dmg installer
+
+`npx electron-builder build --win` for the win exe installer
+
+The resulting files for distribution will reside in the dist directory
+DigitalPool Shot Clock Repeater-1.0.0.dmg (Mac DMG file)
+DigitalPool Shot Clock Repeater Setup 1.0.0.exe (Windows EXE file)
 
 
 
