@@ -34,13 +34,17 @@ export default class SocketServer {
         this.hasConfigServer = hasConfigServer;
     }
 
+    shortenSocketString(string) {
+        return string.substring(string.length - 5);
+    }
+
     // Method to start the socket services
     startSocket() {
 
         // Set the events for the server connections
         this.io.on('connection', (socket) => {
             console.log('Client connected : ', socket.id);
-            if (this.hasConfigServer) this.sendConfigMessage(socket.id + ' - connected');
+            if (this.hasConfigServer) this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Connected');
 
             // Listen for pings that are used to determine clock differences
             socket.on('ping', (data, callback) => {
@@ -54,8 +58,8 @@ export default class SocketServer {
                 let type = data.type;
                 let returnData = {};
 
-                console.log(socket.id + 'joining Match ' + data.match + ' as ' + type + ' in ' + roomName);
-                this.sendConfigMessage(socket.id + ' - joining Match ' + data.match + ' as ' + type);
+                console.log(this.shortenSocketString(socket.id) + 'Joining match ' + data.match + ' as ' + type + ' in ' + roomName);
+                this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Joining match ' + data.match + ' as ' + type);
                 console.log("rooms = ", this.rooms);
                 if (this.rooms[roomName] == undefined) {
                     // Room does not yet exist, so lets create it
@@ -94,12 +98,12 @@ export default class SocketServer {
                     updateKey: data.updateKey
                 });
                 callback('ok');
-                this.sendConfigMessage(socket.id + ' - Room ' + roomName + ' - Update Message from ' + socket.id);
+                this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Room ' + roomName + ' - Update - Remaining : ' + data.remainingTime + ', Playing : ' + data.isPlaying);
             });
 
             socket.on('disconnect', () => {
                 console.log('Client disconnected : ', socket.id);
-                this.sendConfigMessage(socket.id + ' - Client disconnected');
+                this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Client disconnected');
                 this.cleanRooms(socket);
             });
         });
@@ -112,14 +116,14 @@ export default class SocketServer {
     }
 
     ensureEmit(socket, roomName, event, arg) {
-        console.log("sending emit to room " + roomName);
+        console.log("Sending emit to room " + roomName);
         socket.timeout(5000).to(roomName).emit(event, arg, (err) => {
             if (err) {
                 console.log("got error", err);
                 // no ack from the client, so try and send it again
                 this.ensureEmit(socket, roomName, event, arg);
             } else {
-                console.log('Got callback value, so ok');
+                console.log('ok');
             }
         })
     }
