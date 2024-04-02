@@ -74,8 +74,9 @@ export default function App() {
       console.log('Setting the message listener');
       adminSocket.on('message', (data) => {
         // Do some update of the clock differences and set the local vars to mimic the admin
+        let date = new Date();
         console.log('Got message : ', data);
-        let messageString = Date.now().toString() + ' - ' + data + '\n';
+        let messageString = date.toLocaleString() + ' - ' + data + '\n';
         setLogMessages((oldString) => messageString + oldString);
       });
     }
