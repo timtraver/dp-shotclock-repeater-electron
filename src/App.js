@@ -32,8 +32,8 @@ export default function App() {
   const [logMessages, setLogMessages] = useState('');
   const formRef = useRef();
   const [ipAddress, setIpAddress] = useState(localInterfaces[0].address);
-  const [configPort, setConfigPort] = useState('8080');
-  const [connectionURL, setConnectionURL] = useState(`http://${localInterfaces[0].address}:8080`);
+  const [configPort, setConfigPort] = useState('8443');
+  const [connectionURL, setConnectionURL] = useState(`https://${localInterfaces[0].address}:8443`);
   const [serviceRunning, setServiceRunning] = useState(false);
   const [restart, setRestart] = useState(false);
   const showToast = useToast();
@@ -43,7 +43,7 @@ export default function App() {
 
   // Update connectionURL string from the address and port so they have something to copy and paste
   useEffect(() => {
-    setConnectionURL('http://' + ipAddress + ':' + configPort);
+    setConnectionURL('https://' + ipAddress + ':' + configPort);
   }, [ipAddress, configPort]);
 
   // Connect to the admin socket just once

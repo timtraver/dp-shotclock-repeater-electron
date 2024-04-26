@@ -69,7 +69,7 @@ export default class AdminSocketManager {
             this.stopRepeaterSocket();
         }
         // Now start the service with the new IP and port
-        this.repeater = new SocketServer(this.repeaterIpAddress, this.repeaterPort, true);
+        this.repeater = new SocketServer(this.repeaterIpAddress, this.repeaterPort, true, './src/dpkey.pem', './src/dpcrt.pem');
         this.repeater.startSocket();
         this.repeaterIsRunning = true;
         // Set an interval to monitor the messages of the repeater class
