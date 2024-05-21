@@ -12,7 +12,6 @@ import express from 'express';
 import { createServer } from 'node:https';
 import { Server } from 'socket.io';
 import fs from 'fs';
-
 export default class SocketServer {
     address;
     port;
@@ -66,12 +65,10 @@ export default class SocketServer {
                 let type = data.type;
                 let returnData = {};
 
-                console.log(this.shortenSocketString(socket.id) + 'Joining match ' + data.match + ' as ' + type + ' in ' + roomName);
                 this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Joining match ' + data.match + ' as ' + type);
                 console.log("rooms = ", this.rooms);
                 if (this.rooms[roomName] == undefined) {
                     // Room does not yet exist, so lets create it
-                    console.log("Room does not exist, so creating it.");
                     if (type == 'admin') data.admin = socket.id;
                     delete data.type;
                     this.rooms[roomName] = data;
@@ -81,9 +78,9 @@ export default class SocketServer {
                     if (type == 'admin') this.rooms[roomName].admin = socket.id;
                     socket.join(roomName);
                     returnData = this.rooms[roomName];
-                    console.log("Room exists, sending back room data.", returnData);
                 }
-                console.log("this is the return data : ", returnData);
+                const connectionsInRoom = this.io.sockets.adapter.rooms.get(roomName).size;
+                this.sendConfigMessage('Room ' + roomName + ' (' + `${connectionsInRoom}` + ')');
                 callback(
                     returnData
                 );
@@ -105,12 +102,13 @@ export default class SocketServer {
                     maxTime: data.maxTime,
                     updateKey: data.updateKey
                 });
-                callback('ok');
+                callback({
+                    status: "ok"
+                });
                 this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Room ' + roomName + ' - Update - Remaining : ' + data.remainingTime + ', Playing : ' + data.isPlaying);
             });
 
             socket.on('disconnect', () => {
-                console.log('Client disconnected : ', socket.id);
                 this.sendConfigMessage(this.shortenSocketString(socket.id) + ' - Client disconnected');
                 this.cleanRooms(socket);
             });
@@ -118,28 +116,32 @@ export default class SocketServer {
 
         this.io.listen(this.server);
         this.server.listen(this.port, this.address, () => {
-            console.log('Server started and listening at https://' + this.address + ':' + this.port);
             this.sendConfigMessage('Server started and listening at https://' + this.address + ':' + this.port);
         });
     }
 
-    ensureEmit(socket, roomName, event, arg) {
-        console.log("Sending emit to room " + roomName);
-        socket.timeout(5000).to(roomName).emit(event, arg, (err) => {
-            if (err) {
-                console.log("got error", err);
-                // no ack from the client, so try and send it again
-                this.ensureEmit(socket, roomName, event, arg);
-            } else {
-                console.log('ok');
-            }
-        })
+    ensureEmit(socket, roomName, event, arg, attempt = 0) {
+        this.sendConfigMessage("Sending emit to room " + roomName);
+        let retries = 3; // Number of retries before giving up
+        attempt++;
+        if (attempt < retries) {
+            socket.timeout(2000).to(roomName).emit(event, arg, (err, responses) => {
+                if (err) {
+                    this.sendConfigMessage("Got Error From Emit: ", err);
+                    // no ack from the client, so try and send it again
+                    this.ensureEmit(socket, roomName, event, arg, attempt);
+                } else {
+                    this.sendConfigMessage('Emit Success');
+                }
+            });
+        } else {
+            this.sendConfigMessage('Failed to send emit to room ' + roomName + ' after ' + retries + ' attempts.');
+        }
     }
 
     stopSocket() {
         // Stop the socket server and clear the variables
         // make all Socket instances disconnect
-        console.log('Stopping existing socket service.');
         this.io.disconnectSockets();
         this.io.close();
         this.sendConfigMessage('Socket server services stopped.');
@@ -164,8 +166,11 @@ export default class SocketServer {
     }
 
     sendConfigMessage(message) {
-        if (this.hasConfigServer) {
+        if (this.hasConfigServer === true) {
             this.configMessages.push(message);
+        } else {
+            let date = new Date;
+            console.log(date.toLocaleDateString() + ' - ' + message);
         }
     }
 }
